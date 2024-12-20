@@ -1,4 +1,3 @@
-
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 
@@ -12,40 +11,43 @@ return {
     event = "BufRead",
     config = function() require("lsp_signature").setup() end,
   },
-  {
-    "mattn/emmet-vim",
-    event="BufRead"
-  },
+  -- {
+  --   "mattn/emmet-vim",
+  --   event="BufRead"
+  -- },
   {
     "HerringtonDarkholme/yats.vim",
-    event = "BufReadPre *.ts,*.tsx",  -- Плагин загружается при открытии файлов TypeScript
+    event = "BufReadPre *.ts,*.tsx", -- Плагин загружается при открытии файлов TypeScript
   },
   {
     "tpope/vim-fugitive",
-    event = "BufReadPost",  -- Загружать плагин при открытии файла
+    event = "BufReadPost", -- Загружать плагин при открытии файла
   },
   {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     config = function()
-      require('nvim-treesitter.configs').setup {
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = { "javascript", "typescript", "tsx", "html" }, -- Установим нужные языки
         highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        }
-        
+          enable = true, -- Включаем подсветку синтаксиса
+        },
       }
     end,
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require('lspconfig').html.setup {
-        capabilities = require('cmp_nvim_lsp').default_capabilities(),
+      require("lspconfig").html.setup {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
       }
     end,
   },
-
+  {
+    "github/copilot.vim",
+    event = "BufReadPost",
+    autoStart = true,
+  },
   -- == Examples of Overriding Plugins ==
 
   -- customize alpha options
@@ -54,26 +56,26 @@ return {
     opts = function(_, opts)
       -- customize the dashboard header
       opts.section.header.val = {
-"        ██╗  ██╗ ██████╗ ██╗  ██╗   ██╗ █████╗     ",
-"        ██║ ██╔╝██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗    ",
-"        █████╔╝ ██║   ██║██║   ╚████╔╝ ███████║    ",
-"        ██╔═██╗ ██║   ██║██║    ╚██╔╝  ██╔══██║    ",
-"        ██║  ██╗╚██████╔╝███████╗██║   ██║  ██║    ",
-"        ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝  ╚═╝    ",
-"                                                  ",
-"             ██████╗ ██████╗ ██████╗ ██╗████████╗  ",
-"            ██╔════╝██╔═══██╗██╔══██╗██║╚══██╔══╝  ",
-"            ██║     ██║   ██║██║  ██║██║   ██║     ",
-"            ██║     ██║   ██║██║  ██║██║   ██║     ",
-"            ╚██████╗╚██████╔╝██████╔╝██║   ██║     ",
-"             ╚═════╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝     ",
-"                                                   ",
-"                   ██████╗ ██████╗ ██████╗ ██████╗ ",
-"                  ██╔════╝██╔═══██╗██╔══██╗██╔═══╝ ",
-"                  ██║     ██║   ██║██║  ██║██████╗ ",
-"                  ██║     ██║   ██║██║  ██║██╔═══╝ ",
-"                  ╚██████╗╚██████╔╝██████╔╝██████╗ ",
-"                   ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ",
+        "        ██╗  ██╗ ██████╗ ██╗  ██╗   ██╗ █████╗     ",
+        "        ██║ ██╔╝██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗    ",
+        "        █████╔╝ ██║   ██║██║   ╚████╔╝ ███████║    ",
+        "        ██╔═██╗ ██║   ██║██║    ╚██╔╝  ██╔══██║    ",
+        "        ██║  ██╗╚██████╔╝███████╗██║   ██║  ██║    ",
+        "        ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝  ╚═╝    ",
+        "                                                  ",
+        "             ██████╗ ██████╗ ██████╗ ██╗████████╗  ",
+        "            ██╔════╝██╔═══██╗██╔══██╗██║╚══██╔══╝  ",
+        "            ██║     ██║   ██║██║  ██║██║   ██║     ",
+        "            ██║     ██║   ██║██║  ██║██║   ██║     ",
+        "            ╚██████╗╚██████╔╝██████╔╝██║   ██║     ",
+        "             ╚═════╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝     ",
+        "                                                   ",
+        "                   ██████╗ ██████╗ ██████╗ ██████╗ ",
+        "                  ██╔════╝██╔═══██╗██╔══██╗██╔═══╝ ",
+        "                  ██║     ██║   ██║██║  ██║██████╗ ",
+        "                  ██║     ██║   ██║██║  ██║██╔═══╝ ",
+        "                  ╚██████╗╚██████╔╝██████╔╝██████╗ ",
+        "                   ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ",
       }
       return opts
     end,
